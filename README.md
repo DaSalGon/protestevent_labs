@@ -14,6 +14,6 @@ For this homework and the course, you should have installed the statistical prog
 
 You should prepare the answers to the statistical test for the next session in Week 2, on October 28. Send your code answers to Daniel by Monday, October 28, at 10 a.m.
 
-** Nov. 4: Lab 1**
+**Nov. 4: Lab 1**
 
 You will find a simple R script of Laboratory 1 in the scripts folder. Please take a look at it, we will discuss it in the session on November 4. For the analysis, you must download the data from https://poldem.eui.eu/download/, specifically PolDem-30.
