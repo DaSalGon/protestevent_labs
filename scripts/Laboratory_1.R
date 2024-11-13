@@ -43,15 +43,37 @@ country_comparison %>%
   dplyr::filter(radical_action == "confrontational") %>% 
   arrange(percentage) 
 
+
 # What are the most and the least violent countries?
 
 country_comparison %>%
   dplyr::filter(radical_action == "violent") %>% 
-  arrange(desc(percentage)) 
+  arrange(desc(percentage)) %>% 
+  as.data.frame()
 
 country_comparison %>%
   dplyr::filter(radical_action == "violent") %>% 
   arrange(percentage)
+
+
+# Antara's homework: How to identify quantile groups?
+
+percentile_distribution <- country_comparison %>%
+  dplyr::filter(radical_action == "violent") %>% 
+  ungroup()
+
+  # Define the quantile cut-off points
+
+quantiles <- quantile(percentile_distribution$percentage, 
+                      probs = c(0, 0.25, 0.5, 0.75, 1), na.rm = TRUE)
+  
+  # Based on that, assign them to the dataframe again
+
+percentile_distribution$percentage_quantile <- cut(percentile_distribution$percentage, 
+                                                   breaks = quantiles, 
+                                                   include.lowest = TRUE, 
+                                                   labels = c(0, 0.25, 0.5, 0.75),
+                                                   right = TRUE)
 
 # Correlation ##################################################################
 
@@ -86,12 +108,11 @@ rm(country_selection.wide) # Let's clean the work space a little.
 
   ## First, by number of events:
 
-country_selection %>% 
-  ggplot(aes(x = year, y = events, color = country_name)) +
+  ggplot(country_selection, aes(x = year, y = events, color = country_name)) +
   geom_line() +
   # Define the color lines as the country names
   scale_color_manual(values = c("germany" = "red", "spain" = "blue")) +
-  theme_bw() +
+  theme_bw() + 
   xlab("Year") + ylab("Number of events, absolute") +
   # Define the legend names and labels
   labs(color = "Country") 
@@ -118,6 +139,7 @@ data <- data %>%
        )) # Operationalization following Soule and Earl (2005).
 
   ## Aggregate the data
+
 
 country_selection.part <- data %>% 
   dplyr::filter(country_name %in% c("germany", "spain")) %>% 
