@@ -61,7 +61,9 @@ scad_aggr <- scad %>% group_by(countryname, eyr) %>%
   summarise(events_scad = n()) %>% ungroup()
 
 
-mmall_aggr <- mmall %>% group_by(country, year) %>%
+mmall_aggr <- mmall %>% 
+  dplyr::filter(protest!=0) %>% 
+  group_by(country, year) %>%
   summarise(events_mmal = n()) %>% ungroup()
 
 
